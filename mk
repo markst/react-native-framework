@@ -11,12 +11,12 @@ set -e
 export NO_FLIPPER=1
 export USE_HERMES=0
 
-IOS_DEPLOYMENT_TARGET=13.0
+IOS_DEPLOYMENT_TARGET=15.1
 
 function install_dummy_app() {
 	cd "$D"
 	if [ ! -e dummyapp ]; then
-		npx react-native@0.72.4 init --template react-native@0.72.4 dummyapp
+		npx react-native@0.77.3 init --template react-native@0.77.3 dummyapp
 	fi
 }
 
@@ -203,6 +203,9 @@ function compile_dummy_app() {
 		-dead_strip \
 		-fobjc-arc -fobjc-link-runtime -Xlinker -no_adhoc_codesign -compatibility_version 1 -current_version 1 \
 		-framework JavaScriptCore \
+		-framework AudioToolbox \
+		-framework Accelerate \
+		-framework MobileCoreServices \
 		-o $FRAMEWORK/React
 		#-Xlinker -object_path_lto -Xlinker /Users/gabriele/Library/Developer/Xcode/DerivedData/demo-bpyvxoqsookskebwxbzdpiaiigan/Build/Intermediates.noindex/ArchiveIntermediates/demo/IntermediateBuildFilesPath/demo.build/Release-iphoneos/demo.build/Objects-normal/arm64/demo_lto.o \
 		#-Xlinker -dependency_info -Xlinker /Users/gabriele/Library/Developer/Xcode/DerivedData/demo-bpyvxoqsookskebwxbzdpiaiigan/Build/Intermediates.noindex/ArchiveIntermediates/demo/IntermediateBuildFilesPath/demo.build/Release-iphoneos/demo.build/Objects-normal/arm64/demo_dependency_info.dat \
